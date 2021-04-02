@@ -36,8 +36,4 @@ table {
 thead { background: transparent; }
 td, th { background: #F8F8F8; }
 
-article header{
-  color: blue;
-  border-color: crimson;
-  width: auto;
-}
+
