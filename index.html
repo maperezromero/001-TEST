@@ -1,7 +1,7 @@
 <!<!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Prueba stocks</title>
+  <title>Página de prueba para controlar operaciones de bolsa</title>
   <meta charset="utf-8">
   <meta name="description" content="Documento html5">
   <meta name="keywords" content="HTML, CSS, JavaScript">
@@ -11,14 +11,15 @@
 </head>
 <body>
   <header>
-    <span id="titulo">Tabla para ajustar posiciones</span>
+    <h1>Tabla para ajustar posiciones</h1>
   </header>
   <nav>
     <a href="index.html">Principal</a>
     <a href="recursos.html">Recursos</a>
     <a href="Contacto.html">Contacto</a>
   </nav>
-  <title>PRUEBA DE TITULO</title>
+  <h2><i>PRUEBA</i> <cite>DE TITULO</cite></h2>
+  <p>Esto es una prueba de <cite>ecmdscritura</cite><p>
   <p1>
     <table id="tablaDeValores" border="1" >
       <thead>
@@ -43,24 +44,66 @@
           function addRow(tableID) {
             // Obtiene una referencia a la tabla
             var tableRef = document.getElementById(tableID);
-
             // Inserta una fila en la tabla, en el índice 0
             var newRow   = tableRef.insertRow(2);
-
             // Inserta una celda en la fila, en el índice 0
             var newCell  = newRow.insertCell(0);
-
             // Añade un nodo de texto a la celda
             var newText  = document.createTextNode('Celda que inserto en fila nueva');
             newCell.appendChild(newText);
           }
-
           // Llama a addRow() con el ID de la tabla
           addRow('tablaDeValores');
-
         </script>
       </tbody>
     </table>
+    <article>
+      <header>
+        <h1>Título de artículo</h1>
+      </header>
+      <p>La muerte es una <em>quimera</em>. Esto es una prueba de escritura, <strong>strong</strong></p>
+      <img src="imagenes/perro.jpg" height="150" width="150" alt="Perrito en el agua">
+    </article>
+
+
   </p1>
+ <!--  <script type="text/javascript" src="jquery-1.5.1.js"></script>
+  <script type="text/javascript">
+  //NO LLEGA A PASAR DE AQUÍ
+      $(document).ready(function() {
+              var symbol='goog';
+              alert('ENTRA')
+              var callback = function(data) {
+                      var price=data.query.results.span[0].content;
+                      alert('Stock Price: ' + price);
+                  };
+  
+              var url = 'http://query.yahooapis.com/v1/public/yql';
+              // this is the lovely YQL query (html encoded) which lets us get the stock price:
+              // select * from html where url="http://finance.yahoo.com/q?s=goog" and xpath='//span[@id="yfs_l10_goog"]'
+              var data = "q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fq%3Fs%3D" + symbol + "%22%20and%20xpath%3D'%2F%2Fspan%5B%40id%3D%22yfs_l10_" + symbol + "%22%5D'&format=json";
+              $.getJSON(url, data, callback);
+      });
+  </script> -->
+  <input type="text" id="symbol" />
+  <div id='result'>No Price</div>
+  <button type="submit" onClick="getData();">Get Data</button>
+  <script>
+    function getData() {
+      console.log('ENTRA');
+    var url = 'http://query.yahooapis.com/v1/public/yql';
+    var symbol = document.getElementById('symbol').value;//$("#symbol").val();
+    var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol in ('" + symbol + "')");
+
+    $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http://datatables.org/alltables.env")
+        .done(function (data) {
+            $('#result').text("Price: " + data.query.results.quote.LastTradePriceOnly);
+        })
+        .fail(function (jqxhr, textStatus, error) {
+            var err = textStatus + ", " + error;
+            console.log('Request failed: ' + err);
+        });
+    }
+  </script>
 </body>
 </html>
